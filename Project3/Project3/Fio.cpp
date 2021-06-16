@@ -2,6 +2,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <cstring>
 
+//Sokol sosi jopy
+
 Fio::Fio()
 {
 	this->surname = new char[2];
@@ -36,7 +38,6 @@ void Fio::setFather(char* father) {
 	this->father = new char[strlen(father) + 1];
 	strcpy(this->father, father);
 }
-
 void Fio::setFIO(char* surname, char* name, char* father)
 {
 	this->surname = new char[strlen(surname) + 1];
