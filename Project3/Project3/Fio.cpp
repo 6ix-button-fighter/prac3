@@ -2,8 +2,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <cstring>
 
-//Sokol sosi jopy
-
 Fio::Fio()
 {
 	this->surname = new char[2];
