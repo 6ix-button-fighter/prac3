@@ -1,7 +1,7 @@
 #include "Fio.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include <cstring>
-//sosatb vsem
+
 Fio::Fio()
 {											
 	this->surname = new char[2];
