@@ -2,6 +2,8 @@
 #include "Letter.h"
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 int countPeople = 0;
 
@@ -22,7 +24,7 @@ void letter::Inf(letter polzovatel[])
 	printf("----------------------------------------- \n");
 
 	for (int j = 0; j < countPeople; j++) {
-		printf("%s \t\t%.2lf \t%i \n", polzovatel[j].name1, polzovatel[j].cost, polzovatel[j].ind1);
+		printf("%s \t\t%.2lf \t%i \n", polzovatel[j].name1, polzovatel[j].cost, polzovatel[j].ind1 - 2);
 		sum += polzovatel[j].cost;
 	}
 
@@ -36,18 +38,18 @@ void letter::Inf1(letter polzovatel[])
 	system("cls");
 	double sum = 0.0;
 
-	cout << "Имя    Цена   Индекс" << endl;
-	cout << "Отправителя   (руб)   (номер)" << endl;
-	cout << "-----------------------------------------" << endl;
+	printf("Имя \t\tЦена \tИндекс \n");
+	printf("Получателя \t(руб) \t(номер) \n");
+	printf("----------------------------------------- \n");
 
 	for (int j = 0; j < countPeople; j++) {
-		cout << polzovatel[j].getName2() << "   " << polzovatel[j].getCost() << "   " << polzovatel[j].getInd() << endl;
+		cout << polzovatel[j].getName2() << "\t\t" << polzovatel[j].getCost() << "\t" << polzovatel[j].getInd() - 2 << endl;
 		sum += polzovatel[j].getCost();
 	}
 
-	cout << "-----------------------------------------" << endl;
-	cout << "Всего рублей: " << sum << endl;
-	cout << "Количество записей в базе: " << countPeople << endl;
+	printf("----------------------------------------- \n");
+	printf("Всего \t\t%.2lf рублей \n", sum);
+	printf("Количество записей в базе \t%i \n", countPeople);
 
 }
 
@@ -68,22 +70,19 @@ void letter::LoadUser(letter polzovatel[], int count, char* fileName)
 			cin >> name;
 			polzovatel[countPeople].setName1(name);
 			a.setName(name);
-			cout << "Число name: " << countPeople << endl;
 			polzovatel[countPeople].setInd(countPeople + 1);
-			cout << "Число setInd: " << countPeople << endl;
-			fprintf(fileWrite, "Имя: %s \n", a.getName());
+			fprintf(fileWrite, "Получатель: %s \n", a.getName());
 			printf("Введите имя отправителя: ");
 			cin >> name;
 			polzovatel[countPeople].setName2(name);
 			polzovatel[countPeople].setInd(countPeople + 2);
-			cout << "Число setInd: " << countPeople << endl;
-			fprintf(fileWrite, "Имя: %s \n", polzovatel[countPeople].getName2());
-			printf("Введите адрес отправления: ");
+			fprintf(fileWrite, "Отправитель: %s \n", polzovatel[countPeople].getName2());
+			printf("Введите адрес получателя: ");
 			getchar();
 			cin >> adress;
 			polzovatel[countPeople].setAdress1(adress);
 			a.setAdress(adress);
-			fprintf(fileWrite, "Адрес отправления: %s \n", a.getAdress());
+			fprintf(fileWrite, "Адрес получателя: %s \n", a.getAdress());
 			printf("Введите адрес отправления: ");
 			cin >> adress;
 			polzovatel[countPeople].setAdress2(adress);
@@ -93,7 +92,6 @@ void letter::LoadUser(letter polzovatel[], int count, char* fileName)
 			polzovatel[countPeople].setCost(price);
 			fprintf(fileWrite, "Цена письма: %lf \n\n", polzovatel[countPeople].getCost());
 			countPeople++;
-			cout << "Число: " << countPeople << endl;
 		}
 		else
 			printf("Невозможно! \n");
@@ -106,98 +104,91 @@ void letter::LoadUser(letter polzovatel[], int count, char* fileName)
 void letter::SearchSender(letter polzovatel[], char* fileName)
 {
 	system("cls");
-	FILE* fileWrite;
-	fileWrite = fopen(fileName, "a+");
-	char text[256], sText[20], sName[20];
-	int y = 0;
+	ifstream fileWrite(fileName);	
+	string searchName, line[256];
+	int countLine = 0, point = -1;
 
-	if (fileWrite != NULL)
+	if (fileWrite.is_open())
 	{
-		cout << "Введите имя отправителя: ";
-		cin >> sName;
+		cout << "Введите нужное имя: ";
+		cin >> searchName;
+		cout << endl;
 
-		while (1) {
-			if (feof(fileWrite))
-				break;
-			else {
-				cout << "  " << text << endl;
-				y++;
+		while (getline(fileWrite, line[countLine]))
+		{
+			if (countLine % 6 == 0) {
+				if (line[countLine].find(searchName) != -1)
+					point = countLine;
 			}
-		}
 
-		for (int j = 3; j < y; j += 13) {
-			if (text[j] == sName[y]) {
-				for (int k = j - 3; k < j + 10; k++)
-					cout << " " << text[k];
-				cout << endl;
-			}
+			if (point >= 0 && countLine == point + 6)
+				for (int n = point; n < point + 6; n++)
+					cout << line[n] << endl;
+
+			countLine++;
 		}
 	}
 	else cerr << "Не удалось открыть файл\n";
-	fclose(fileWrite);
+	fileWrite.close();
+}
+
+int compare(const void* x1, const void* x2)
+{
+	return (*(int*)x1 - *(int*)x2);
 }
 
 void letter::SortMoney(char* fileName) {
 
 	system("cls");
-	FILE* fileWrite;
-	fileWrite = fopen(fileName, "a+");
+	ifstream fileWrite(fileName);
 	string text[256], sText;
 	int y = 0, second = 0, first = 0;
 
-	double* secondPrice, * firstPrice;
-	secondPrice = new double[count];
-	firstPrice = new double[count];
+	double *secondPrice = new double[count], 
+		   *firstPrice = new double[count];
 
-	if (fileWrite != NULL)
+	if (fileWrite.is_open())
 	{
-		while (1) {
-			fscanf(fileWrite, "%s", &text);
-			if (feof(fileWrite))
-				break;
-			else {
-				cout << "  " << text;
-				y++;
-			}
+		while (!fileWrite.eof()) {
+			fileWrite >> text[y];
+			y++;
 		}
 
-		for (int j = 12; j < y; j += 13) { // 12 25 38
-			secondPrice[j - 12] = atof(text[j].c_str());
+		for (int j = 12; j < y; j += 13) {
+			secondPrice[second] = atof(text[j].c_str());
+			firstPrice[second] = atof(text[j].c_str());
 			second++;
-			firstPrice[j - 12] = atof(text[j].c_str());
-			first++;
 		}
 
 		for (int j = 0; j < second; j++) {
 			for (int k = 0; k < second - 1; k++) {
 				if (secondPrice[k] > secondPrice[k + 1]) {
 
-					double b = secondPrice[k]; // создали дополнительную переменную
-					secondPrice[k] = secondPrice[k + 1]; // меняем местами
-					secondPrice[k + 1] = b; // значения элементов
+					double b = secondPrice[k];
+					secondPrice[k] = secondPrice[k + 1];
+					secondPrice[k + 1] = b;
 				}
 			}
 		}
 
 		for (int j = 0; j < second; j++) {
-			for (int k = 0; k < first; k++) {
+			for (int k = 0; k < second; k++) {
 				if (secondPrice[j] == firstPrice[k]) {
 					int pos = 12;
 
 					if (k > 0)
 						pos = (k + 1) * 12 + k;
 					for (int n = pos - 12; n < pos + 1; n++) {
-						if (n == 0)
-							cout << endl << endl;
 						cout << " " << text[n];
 					}
 					cout << endl;
 				}
+				else continue;
 			}
 		}
 	}
 	else cerr << "Не удалось открыть файл\n";
-	fclose(fileWrite);
+	fileWrite.close();
 }
 
 bool letter::operator==(Fio& obj) {

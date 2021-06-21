@@ -1,4 +1,4 @@
 ﻿  Letter.cpp
-D:\ООП\Project3\Project3\Letter.cpp(111,18): warning C4101: sText: неиспользованная локальная переменная
-D:\ООП\Project3\Project3\Letter.cpp(155,22): warning C4477: "fscanf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "1" имеет тип "std::string (*)[256]"
-  Project3.vcxproj -> D:\ООП\Project3\Debug\Project3.exe
+  Menu.cpp
+  Создание кода...
+  Project3.vcxproj -> C:\Users\Вадим\source\repos\LoggerNice\prac3\Project3\Debug\Project3.exe
