@@ -142,14 +142,12 @@
   <ItemGroup>
     <ClInclude Include="Fio.h" />
     <ClInclude Include="Letter.h" />
-    <ClInclude Include="Letters.h" />
     <ClInclude Include="man.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fio.cpp" />
     <ClCompile Include="Letter.cpp" />
-    <ClCompile Include="Letters.cpp" />
     <ClCompile Include="man.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Source.cpp" />
