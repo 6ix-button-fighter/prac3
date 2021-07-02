@@ -7,14 +7,7 @@
 using namespace std;
 int countPeople = 0;
 
-//letter::letter(letter& obj)
-//{
-//	this->count++;
-//	this->Man.setAdress(obj.Man.getAdress());
-//	this->Man.setName(obj.Man.getName());
-//}
-
-void letter::Inf(letter polzovatel[])
+void letter::Inf(letter polzovatel[], man manS[])
 {
 	system("cls");
 	double sum = 0.0;
@@ -24,7 +17,7 @@ void letter::Inf(letter polzovatel[])
 	printf("----------------------------------------- \n");
 
 	for (int j = 0; j < countPeople; j++) {
-		printf("%s \t\t%.2lf \t%i \n", polzovatel[j].name1, polzovatel[j].cost, polzovatel[j].ind1 - 2);
+		printf("%s \t\t%.2lf \t%i \n", manS[j].getName(), polzovatel[j].cost, polzovatel[j].ind1 - 2);
 		sum += polzovatel[j].cost;
 	}
 
@@ -33,17 +26,17 @@ void letter::Inf(letter polzovatel[])
 	printf("Количество записей в базе \t%i \n", countPeople);
 }
 
-void letter::Inf1(letter polzovatel[])
+void letter::Inf1(letter polzovatel[], man manR[])
 {
 	system("cls");
 	double sum = 0.0;
 
 	printf("Имя \t\tЦена \tИндекс \n");
-	printf("Получателя \t(руб) \t(номер) \n");
+	printf("Отправителя \t(руб) \t(номер) \n");
 	printf("----------------------------------------- \n");
 
 	for (int j = 0; j < countPeople; j++) {
-		cout << polzovatel[j].getName2() << "\t\t" << polzovatel[j].getCost() << "\t" << polzovatel[j].getInd() - 2 << endl;
+		cout << manR[j].getName() << "\t\t" << polzovatel[j].getCost() << "\t" << polzovatel[j].getInd() - 2 << endl;
 		sum += polzovatel[j].getCost();
 	}
 
@@ -53,9 +46,8 @@ void letter::Inf1(letter polzovatel[])
 
 }
 
-void letter::LoadUser(letter polzovatel[], int count, char* fileName)
+void letter::LoadUser(letter polzovatel[], man manS[], man manR[], int count, char* fileName)
 {
-	man a;
 	string name, adress;
 	double price;
 
@@ -68,25 +60,23 @@ void letter::LoadUser(letter polzovatel[], int count, char* fileName)
 		if (countPeople < count) {
 			printf("Введите имя получателя: ");
 			cin >> name;
-			polzovatel[countPeople].setName1(name);
-			a.setName(name);
+			manS[countPeople].setName(name);
 			polzovatel[countPeople].setInd(countPeople + 1);
-			fprintf(fileWrite, "Получатель: %s \n", a.getName());
+			fprintf(fileWrite, "Получатель: %s \n", manS[countPeople].getName());
 			printf("Введите имя отправителя: ");
 			cin >> name;
-			polzovatel[countPeople].setName2(name);
+			manR[countPeople].setName(name);
 			polzovatel[countPeople].setInd(countPeople + 2);
-			fprintf(fileWrite, "Отправитель: %s \n", polzovatel[countPeople].getName2());
+			fprintf(fileWrite, "Отправитель: %s \n", manR[countPeople].getName());
 			printf("Введите адрес получателя: ");
 			getchar();
 			cin >> adress;
-			polzovatel[countPeople].setAdress1(adress);
-			a.setAdress(adress);
-			fprintf(fileWrite, "Адрес получателя: %s \n", a.getAdress());
+			manS[countPeople].setAdress(adress);
+			fprintf(fileWrite, "Адрес получателя: %s \n", manS[countPeople].getAdress());
 			printf("Введите адрес отправления: ");
 			cin >> adress;
-			polzovatel[countPeople].setAdress2(adress);
-			fprintf(fileWrite, "Адрес отправителя: %s \n", polzovatel[countPeople].getAdress2());
+			manR[countPeople].setAdress(adress);
+			fprintf(fileWrite, "Адрес отправителя: %s \n", manR[countPeople].getAdress());
 			printf("Введите цену письма: ");
 			cin >> price;
 			polzovatel[countPeople].setCost(price);
@@ -116,13 +106,12 @@ void letter::SearchSender(letter polzovatel[], char* fileName)
 
 		while (getline(fileWrite, line[countLine]))
 		{
-			if (countLine % 6 == 0) {
+			if (countLine % 6 == 0)
 				if (line[countLine].find(searchName) != -1)
 					point = countLine;
-			}
 
-			if (point >= 0 && countLine == point + 6)
-				for (int n = point; n < point + 6; n++)
+			if (point >= 0 && countLine == point + 5)
+				for (int n = point; n < point + 5; n++)
 					cout << line[n] << endl;
 
 			countLine++;
@@ -192,24 +181,16 @@ void letter::SortMoney(char* fileName) {
 }
 
 bool letter::operator==(Fio& obj) {
-	if ((strcmp(this->fio.getSurname(), obj.getSurname()) == 0) &&
-		(strcmp(this->fio.getName(), obj.getName()) == 0) &&
-		(strcmp(this->fio.getFather(), obj.getFather()) == 0))
+	man* manS = new man[countPeople];
+	if ((strcmp(manS[countPeople].getSurname(), obj.getSurname()) == 0) &&
+		(strcmp(manS[countPeople].getName(), obj.getName()) == 0))
 		return true;
 	else
 		return false;
 }
 
-char* letter::getName1() { return name1; }
-char* letter::getName2() { return name2; }
-char* letter::getAdress1() { return adres1; }
-char* letter::getAdress2() { return adres2; }
 double letter::getCost() { return cost; }
 int letter::getInd() { return ind1; }
 
-void letter::setName1(string name) { strcpy(name1, name.c_str()); }
-void letter::setName2(string name) { strcpy(name2, name.c_str()); }
-void letter::setAdress1(string adress) { strcpy(adres1, adress.c_str()); }
-void letter::setAdress2(string adress) { strcpy(adres2, adress.c_str()); }
 void letter::setInd(int id) { ind1 = id; }
 void letter::setCost(double price) { cost = price; }

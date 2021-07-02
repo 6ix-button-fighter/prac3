@@ -1,23 +1,16 @@
 #pragma once
+#include <iostream>
+using namespace std;
+
 class Fio
 {
-	char* surname;
-	char* name;
-	char* father;
+private:
+	char surname[50];
+	char name[50];
 public:
-	friend class Clinic;
-
-	Fio();
-	~Fio();
-
 	char* getSurname();
 	char* getName();
-	char* getFather();
 
-	void setSurname(char* surname);
-	void setName(char* name);
-	void setFather(char* father);
-
-private:
-	void setFIO(char* surname, char* name, char* father);
+	void setSurname(string surname);
+	void setName(string name);
 };

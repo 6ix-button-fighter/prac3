@@ -2,18 +2,10 @@
 #include <iostream>
 using namespace std;
 
-void man::setAdress(string adr2) {
-	strcpy(adr, adr2.c_str());
-}
+char* man::getSurname() { return FIO.getSurname(); }
+char* man::getAdress() { return adr; }
+char* man::getName() { return FIO.getName(); }
 
-void man::setName(string name2) {
-	strcpy(name, name2.c_str());
-}
-
-char* man::getAdress() {
-	return adr;
-}
-
-char* man::getName() {
-	return name;
-}
+void man::setAdress(string adr2) { strcpy(adr, adr2.c_str()); }
+void man::setName(string name2) { FIO.setName(name2.c_str()); }
+void man::setSurname(string surname2) { FIO.setSurname(surname2.c_str()); }

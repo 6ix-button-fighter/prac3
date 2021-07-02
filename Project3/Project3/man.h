@@ -1,28 +1,17 @@
 #pragma once
 #include <iostream>
+#include "Fio.h"
 using namespace std;
-
 
 class man {
 public:
 	void setAdress(string adr);
 	void setName(string name);
+	void setSurname(string name);
 	char* getAdress();
 	char* getName();
+	char* getSurname();
 private:
 	char adr[50];
-	char name[50];
+	Fio FIO;
 };
-
-
-/*	delete[] this->adr;
-	this->adr = new char[adr->count];
-	for (int i = 0; i < adr->count; i++) {
-		this->adr[i] = adr[i];
-	}
-	this->count = count;
-}
-
-char* man::getAdr() {
-	return man;
-}*/
