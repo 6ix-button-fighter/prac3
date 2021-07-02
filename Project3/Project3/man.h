@@ -2,7 +2,6 @@
 #include <iostream>
 using namespace std;
 
-
 class man {
 public:
 	void setAdress(string adr);

@@ -1,5 +1,5 @@
 #pragma once
-class Fio
+class Fio 
 {
 	char* surname;
 	char* name;

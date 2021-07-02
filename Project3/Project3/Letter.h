@@ -36,7 +36,7 @@ public:
 	char* getAdress2();
 	double getCost();
 	int getInd();
-
+	 
 	void setName1(string name);
 	void setName2(string name);
 	void setAdress1(string adress);
