@@ -3,20 +3,31 @@
 #include "Letter.h"
 using namespace std;
 
-void Menu::Choice(letter polzovatel[], man manS[], man manR[], int count, char* fileName)
+
+//Letter::Letter()
+//{
+
+//}
+
+void Menu::Choice(letter polzovatel[], int count, char* fileName)
 {
 	int input;
 	cout << endl << "Что желаете сделать?" << endl;
+	//printf("Что желаете сделать? \n");
 	cout << "[1] Галвное меню" << endl;
+	//printf("[1] Главное меню \n");
 	cout << "[2] Выйти" << endl << endl;
+	//printf("[2] Выйти \n");
 	cin >> input;
+	//scanf("%i", &input);
 
 	if (input == 1)
-		Option(polzovatel, manS, manR, count, fileName);
+		Option(polzovatel, count, fileName);
 	else if (input == 2)
 		exit(0);
 	else
 		cout << "Ошибка ввода!" << endl;
+	//printf("Ошибка ввода! \n");
 }
 
 int Menu::Quest()
@@ -36,7 +47,7 @@ int Menu::Quest()
 	return input;
 }
 
-void Menu::Option(letter polzovatel[], man manS[], man manR[], int count, char* fileName)
+void Menu::Option(letter polzovatel[], int count, char* fileName)
 {
 	int input = 0;
 	letter let;
@@ -49,17 +60,17 @@ void Menu::Option(letter polzovatel[], man manS[], man manR[], int count, char* 
 
 		case 1:
 			getchar();
-			let.LoadUser(polzovatel, manS, manR, count, fileName);
+			let.LoadUser(polzovatel, count, fileName);
 			break;
 
 		case 2:
 			getchar();
-			let.Inf(polzovatel, manS);
+			let.Inf(polzovatel);
 			break;
 
 		case 3:
 			getchar();
-			let.Inf1(polzovatel, manR);
+			let.Inf1(polzovatel);
 			break;
 
 		case 4:
@@ -81,6 +92,6 @@ void Menu::Option(letter polzovatel[], man manS[], man manR[], int count, char* 
 			system("cls");
 			break;
 		}
-		Choice(polzovatel, manS, manR, count, fileName);
+		Choice(polzovatel, count, fileName);
 	}
 }

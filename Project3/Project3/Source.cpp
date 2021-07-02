@@ -16,9 +16,8 @@ int main()
 	SetConsoleOutputCP(1251);
 
 	char nameFile[15] = "polzovatel.txt";
-	int countPolzovatel = 0;
+	int countPolzovatel;
 	letter* pas;
-	man *manS = new man[countPolzovatel], *manR = new man[countPolzovatel];
 	letter l;
 	Menu m;
 
@@ -31,11 +30,11 @@ int main()
 	if ((fileRead = fopen("polzovatel.txt", "rb+")) == NULL)
 	{
 		getchar();
-		l.LoadUser(pas, manS, manR, countPolzovatel, nameFile);
-		m.Choice(pas, manS, manR, countPolzovatel, nameFile);
+		l.LoadUser(pas, countPolzovatel, nameFile);
+		m.Choice(pas, countPolzovatel, nameFile);
 	}
 
-	m.Option(pas, manS, manR, countPolzovatel, nameFile);
+	m.Option(pas, countPolzovatel, nameFile);
 
 	delete[] pas;
 }
