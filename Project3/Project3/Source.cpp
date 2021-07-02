@@ -9,7 +9,7 @@ using namespace std;
 letter::letter() {
 	int l;
 }
-
+ 
 int main()
 {
 	SetConsoleCP(1251);

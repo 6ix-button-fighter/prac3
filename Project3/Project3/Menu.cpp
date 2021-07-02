@@ -3,12 +3,6 @@
 #include "Letter.h"
 using namespace std;
 
-
-//Letter::Letter()
-//{
-
-//}
-
 void Menu::Choice(letter polzovatel[], int count, char* fileName)
 {
 	int input;

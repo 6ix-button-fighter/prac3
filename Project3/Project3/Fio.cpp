@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Fio.h"
 #include <cstring>
-
+  
 Fio::Fio()
 {											
 	this->surname = new char[2];

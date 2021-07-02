@@ -116,7 +116,7 @@ void letter::SearchSender(letter polzovatel[], char* fileName)
 
 		while (getline(fileWrite, line[countLine]))
 		{
-			if (countLine % 6 == 0) {
+			if (countLine % 6 == 0) { 
 				if (line[countLine].find(searchName) != -1)
 					point = countLine;
 			}
